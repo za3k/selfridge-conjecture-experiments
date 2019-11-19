@@ -1,7 +1,7 @@
 The Selfridge/Pomerance/Wagstaff Conjecture about primality testing conjectures that:
 ```
-  IF  2^p−1   ≡ 1 (mod p) 
-  AND f_{p+1} ≡ 0 (mod p),
+  IF  2^{p−1} ≡ 1 (mod p) 
+  AND f_{p+1} ≡ 0 (mod p), where F_n is the nth fibonacci number
   THEN p is prime
 ```
 This program both searches for counterexamples, and tests methods for correctness/speed.

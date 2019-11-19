@@ -1,6 +1,6 @@
 """
 Selfridge/Pomerance/Wagstaff Conjecture about primality testing:
-  IF  2^p−1   ≡ 1 (mod p) 
+  IF  2^{p−1} ≡ 1 (mod p) 
   AND f_{p+1} ≡ 0 (mod p),
   THEN p is prime
 
