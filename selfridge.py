@@ -61,7 +61,7 @@ def two_pow_n_mod_x2b(n, x):
         return s*s % x
 
 def two_pow_n_mod_x3(n, x):
-    return pow(2, n, mod=x)
+    return pow(2, n, x)
 
 def fib_n_mod_x0(n, x):
     if x == 1:
