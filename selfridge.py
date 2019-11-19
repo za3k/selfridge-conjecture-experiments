@@ -38,7 +38,7 @@ def two_pow_n_mod_x1(n, x):
     return s
 
 def two_pow_n_mod_x2a(n, x):
-    # Explicit bits method
+    # Explicit bits method, left to right
     if x == 1:
         return 0
     s = 1
@@ -49,6 +49,19 @@ def two_pow_n_mod_x2a(n, x):
     return s
 
 def two_pow_n_mod_x2b(n, x):
+    # Explicit bits method, right to left
+    if x == 1:
+        return 0
+    s = 1
+    b = 2
+    while n:
+        if n%2:
+            s = (s * b) % x
+        b = (b * b) % x
+        n = n//2
+    return s
+
+def two_pow_n_mod_x2c(n, x):
     # Recursive method
     if x == 1:
         return 0
@@ -112,10 +125,18 @@ def fib_n_mod_x2b(n, x):
             S = mm_mod_x(A, S, x)
     return S[0][0]
 
-def fib_n_mod_x3(n, x):
-    # current n is 1
-    fn = 1 # F_{n}
-    fn_minus = 0 # F_{n-1}
+
+# A^2n = A^n A^n
+# [ F2n+1  F2n   ] = [ Fn+1 Fn   ] [ Fn+1 Fn   ]
+# [ F2n    F2n-1 ]   [ Fn   Fn-1 ] [ Fn   Fn-1 ]
+#                  = [ Fn+1Fn+1 + Fn-1Fn-1      Fn+1Fn + FnFn-1 ]
+#                    [ FnFn+1 + Fn-1Fn          FnFn + Fn-1Fn-1 ]
+# F2n = Fn(Fn+1 + Fn-1) = Fn(Fn + Fn-1 + Fn-1) = FnFn + 2FnFn-1
+# F2n-1 = FnFn + Fn-1Fn-1
+def fib_n_mod_x3a(n, x):
+    # bit method, left to right
+    fn = 1 # Fn
+    fn_minus = 0 # Fn-1
     for bit in bits(n, msb_first=True)[1:]:
         a = fn*fn % x
         b = fn_minus*fn_minus % x
@@ -125,6 +146,13 @@ def fib_n_mod_x3(n, x):
         if bit:
             fn_minus, fn = fn, (fn+fn_minus)%x
     return fn
+
+# [ Fx+y+1  Fx+y   ] = [ Fx+1 Fx   ] [ Fy+1 Fy   ]
+# [ Fx+y    Fx+y-1 ]   [ Fx   Fx-1 ] [ Fy   Fy-1 ]
+#                    = [ Fx+1Fy+1 + FxFy-1    Fx+1Fy + FxFy-1
+#                      [ FxFy+1 + Fx-1Fy      FxFy + Fx-1Fy-1
+# Fx+y = FxFy+1 + Fx-1Fy = Fx(Fy+Fy-1) + Fx-1Fy = FxFy + FxFy-1 + Fx-1Fy
+# Fx+y-1 = FxFy + Fx-1Fy-1
 
 def modmult1(a,b,x):
     if a>b:
@@ -212,8 +240,8 @@ def count_true(l):
 
 # For these, the first in each list is a definitely-correct "reference" implementation
 # The last is used in the main program--it's the fastest
-powmods = (two_pow_n_mod_x0, two_pow_n_mod_x1, two_pow_n_mod_x2a, two_pow_n_mod_x2b, two_pow_n_mod_x3)
-fibmods = (fib_n_mod_x0, fib_n_mod_x1, fib_n_mod_x2a, fib_n_mod_x2b, fib_n_mod_x4, fib_n_mod_x3)
+powmods = (two_pow_n_mod_x0, two_pow_n_mod_x1, two_pow_n_mod_x2a, two_pow_n_mod_x2b, two_pow_n_mod_x2c, two_pow_n_mod_x3)
+fibmods = (fib_n_mod_x0, fib_n_mod_x1, fib_n_mod_x2a, fib_n_mod_x2b, fib_n_mod_x4, fib_n_mod_x3a)
 prime_tests = (is_prime0, is_prime2, is_prime3)
 batch_prime_calcs = (all_primes0, all_primes4)
 def test():
