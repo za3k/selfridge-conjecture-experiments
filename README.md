@@ -5,6 +5,7 @@ The Selfridge/Pomerance/Wagstaff Conjecture about primality testing conjectures 
   THEN p is prime
 ```
 This program both searches for counterexamples, and tests methods for correctness/speed.
+There is also a C version, which is 5-10 times faster, and should handle numbers up to 2^64.
 
 Here is an example output run on my computer:
 ```
