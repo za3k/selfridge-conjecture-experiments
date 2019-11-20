@@ -64,10 +64,10 @@ void sieve(unsigned char is_prime[], SINT start, SINT end){
     }
 }
 
-#define UPPER 1000000000
+#define UPPER 10000000000
 unsigned char is_prime[UPPER+1];
 int main(){
-    printf("Searching for counterexamples between 1 and %d...\n", UPPER-1);
+    printf("Searching for counterexamples between 1 and %lu...\n", UPPER-1);
     sieve(is_prime, 2, UPPER);
     for (SINT x=2; x<=UPPER; x++) {
         if (pow2_n_mod_x(x-1, x)==1 && fib_n_mod_x(x+1, x)==0 && !is_prime[x]){
